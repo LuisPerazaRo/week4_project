@@ -1,2 +1,2 @@
-# week4_project
-For the Getting and Cleaning data final project
+# Human Activity Recognition Using Smartphones Dataset - Week 4 project
+#Getting and Cleaning data in R
