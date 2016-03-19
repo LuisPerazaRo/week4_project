@@ -54,7 +54,7 @@ database$labels <- NULL
 aux <- split(database, as.factor(database$participant))
 #aux2 <- aggregate(onepart[,-(1:2)], list(onepart$activity), mean)
 meanbyparticipant <-do.call(rbind,lapply(aux, function(chunk) aggregate(chunk[,-2], list(chunk$activity), mean)))
-colnames(meanbyparticipant)[1] <- "acitivities"
+colnames(meanbyparticipant)[1] <- "activities"
 
 #Write both datasets in two csv files
 write.csv(database,"mergeddata.csv", row.names = FALSE)
