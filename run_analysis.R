@@ -26,26 +26,41 @@ trainfile = "./train/X_train.txt"
 Numlines = length(readLines(trainfile))
 traindata <- read.fwf(trainfile, widths = rep(16,561)*indvec, sep = "", n = Numlines) 
 
+#Load the index labels for each activity and the real labels
+testlabelfile <-"./test/y_test.txt"
+testlabels <- data.frame(labels = readLines(testlabelfile))
+trainlabelfile <-"./train/y_train.txt"
+trainlabels <- data.frame(labels =readLines(trainlabelfile))
+mergedlabels <- rbind(testlabels, trainlabels)
+activities <- readLines("activity_labels.txt")
+activities <- data.frame(id = factor(1:6), activity = sapply(strsplit(activities, " "), secondElement)) #Get the second element only
+mergedActivities <- left_join(mergedlabels,activities, c("labels" ="id"))
+
 #Merge test and train data in one matrix
 MergedData <- rbind(testdata,traindata)
-#rm(list = c("testdata","traindata")) #Remove the separated datasets
+rm(list = c("testdata","traindata")) #Remove the separated datasets
 #Ad the column names for the dataset
 colnames(MergedData) <- Mynames
 
 #The Participant indices per test and train data
-testPart <- readLines("./test/subject_test.txt")
-trainPart <- readLines("./train/subject_train.txt")
-SubID <- c(testPart, trainPart)
+testPart <- as.numeric(readLines("./test/subject_test.txt"))
+trainPart <- as.numeric(readLines("./train/subject_train.txt"))
+SubID <- data.frame(participant = c(testPart, trainPart))
 
-MergedData <- mutate(MergedData, participant_id = SubID)
-MergedData <- MergedData[, c(67, 1:66)] #Move the Participant column to the first column
-Partdata <- group_by(MergedData, participant_id)
-#Estimate mean for each study participant
-MeanbyPart <- summarise_each(Partdata, funs(mean))
+#Merged all three frames
+database <- cbind(SubID, mergedActivities, MergedData)
+database$labels <- NULL
+
+aux <- split(database, as.factor(database$participant))
+#aux2 <- aggregate(onepart[,-(1:2)], list(onepart$activity), mean)
+meanbyparticipant <-do.call(rbind,lapply(aux, function(chunk) aggregate(chunk[,-2], list(chunk$activity), mean)))
+colnames(meanbyparticipant)[1] <- "acitivities"
 
 #Write both datasets in two csv files
-write.csv(MergedData, "mergeddata.csv",row.names=FALSE)
-write.csv(MeanbyPart, "meanbyparticipant.csv",row.names=FALSE)
+write.csv(database,"mergeddata.csv", row.names = FALSE)
+write.csv(meanbyparticipant, "meanbyparticipant.csv",row.names=FALSE)
+write.table(meanbyparticipant, "meanbyparticipant.txt",row.names=FALSE)
+
 
 
 
