@@ -2,9 +2,9 @@
 
 This is codebook is a modified version from the original file features_info.txt from Anguita et al. [1]. For the sake of consistency, variable names were kept as in the original dataset to avoid confusion by the processing steps. The run_analysis.R file creates two datasets:
 
-* mergeddata.csv - This file is the merged version of the feature train and test datasets in the original files, with variable names and particpant IDs included. Only means and standard deviations were chosen to comprise this file.
+* mergeddata.csv - This file is the merged version of the feature train and test datasets in the original files, with variable names and particpant IDs included. Only means and standard deviations were chosen to comprise this file. Dimensions 10299x68
 
-* meanbyparticipant.csv - This file is the mean per participant and per activity for all the features as specified in the project guidelines, same variable names as mergeddata.csv to keep consistency. 
+* meanbyparticipant.csv - This file is the mean per participant and per activity for all the features as specified in the project guidelines, same variable names as mergeddata.csv to keep consistency. Dimensions 180x68
 
 Activities are names as LAYING, SITTING, STANDING, WALKING, WALKING_DOWNSTAIRS, WALKING_UPSTAIRS
 
