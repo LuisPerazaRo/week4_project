@@ -4,7 +4,9 @@ This is codebook is a modified version from the original file features_info.txt 
 
 * mergeddata.csv - This file is the merged version of the feature train and test datasets in the original files, with variable names and particpant IDs included. Only means and standard deviations were chosen to comprise this file.
 
-* meanbyparticipant.csv - This file is the mean per participant for all the features as specified in the project guidelines, same variable names as mergeddata.csv to keep consistency.
+* meanbyparticipant.csv - This file is the mean per participant and per activity for all the features as specified in the project guidelines, same variable names as mergeddata.csv to keep consistency. 
+
+Activities are names as LAYING, SITTING, STANDING, WALKING, WALKING_DOWNSTAIRS, WALKING_UPSTAIRS
 
 For more information about the variables, refer to feature_info.txt original file. Here I reproduce the bits that explain the name of each of the variables, as these were coded.
 
